@@ -57,3 +57,14 @@ class EmployeePositionUpdateForm(forms.ModelForm):
     class Meta:
         model = Employee
         fields = ["position"]
+
+
+class PositionSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search task type"}
+        )
+    )

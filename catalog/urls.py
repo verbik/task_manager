@@ -16,7 +16,11 @@ from .views import (
     EmployeeDetailView,
     EmployeeCreateView,
     EmployeeUpdatePositionView,
-    EmployeeDeleteView
+    EmployeeDeleteView,
+    PositionListView,
+    PositionCreateView,
+    PositionUpdateView,
+    PositionDeleteView
 )
 
 urlpatterns = [
@@ -97,6 +101,27 @@ urlpatterns = [
         "employee/<int:pk>/delete/",
         EmployeeDeleteView.as_view(),
         name="employee-delete"
+    ),
+    # Position
+    path(
+        "positions/",
+        PositionListView.as_view(),
+        name="position-list"
+    ),
+    path(
+        "positions/create/",
+        PositionCreateView.as_view(),
+        name="position-create"
+    ),
+    path(
+        "positions/<int:pk>/update/",
+        PositionUpdateView.as_view(),
+        name="position-update"
+    ),
+    path(
+        "position/<int:pk>/delete/",
+        PositionDeleteView.as_view(),
+        name="position-delete"
     )
 ]
 

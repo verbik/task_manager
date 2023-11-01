@@ -14,7 +14,8 @@ from catalog.forms import (TaskTypeSearchForm,
                            TaskSearchForm,
                            EmployeeSearchForm,
                            EmployeeCreationForm,
-                           EmployeePositionUpdateForm)
+                           EmployeePositionUpdateForm,
+                           PositionSearchForm)
 
 
 @login_required
@@ -151,6 +152,7 @@ def toggle_assign_to_task(request, pk):
     return HttpResponseRedirect(reverse_lazy("catalog:task-detail", args=[pk]))
 
 
+# Employee Views
 class EmployeeListView(LoginRequiredMixin, generic.ListView):
     model = Employee
     paginate_by = 10
@@ -192,3 +194,43 @@ class EmployeeUpdatePositionView(LoginRequiredMixin, generic.UpdateView):
 class EmployeeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Employee
     success_url = reverse_lazy("catalog:employee-list")
+
+
+# Position Views
+class PositionListView(LoginRequiredMixin, generic.ListView):
+    model = Position
+    paginate_by = 10
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PositionListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = PositionSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Position.objects.all()
+        name = self.request.GET.get("name")
+
+        if name:
+            return queryset.filter(name__icontains=name)
+
+        return queryset
+
+
+class PositionCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("catalog:position-list")
+
+
+class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("catalog:position-list")
+
+
+class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Position
+    success_url = reverse_lazy("catalog:position-list")
