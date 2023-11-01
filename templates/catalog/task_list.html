@@ -26,10 +26,7 @@
               {{ task.id }}
           </td>
           <td>
-              {{ task.name }}
-          </td>
-          <td>
-              {{ task.country }}
+              <a href="{% url 'catalog:task-detail' pk=task.id%}">{{ task.name }}</a>
           </td>
           <td>
               <a href="{% url 'catalog:task-type-update' pk=task.id %}">

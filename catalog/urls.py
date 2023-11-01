@@ -9,7 +9,14 @@ from .views import (
     TaskListView,
     TaskCreateView,
     TaskUpdateView,
-    TaskDeleteView
+    TaskDeleteView,
+    TaskDetailView,
+    toggle_assign_to_task,
+    EmployeeListView,
+    EmployeeDetailView,
+    EmployeeCreateView,
+    EmployeeUpdatePositionView,
+    EmployeeDeleteView
 )
 
 urlpatterns = [
@@ -46,14 +53,50 @@ urlpatterns = [
         name="task-create"
     ),
     path(
-        "task/<int:pk>/update/",
+        "tasks/<int:pk>/update/",
         TaskUpdateView.as_view(),
         name="task-update"
     ),
     path(
-        "task/<int:pk>/delete/",
+        "tasks/<int:pk>/delete/",
         TaskDeleteView.as_view(),
         name="task-delete"
+    ),
+    path(
+        "tasks/<int:pk>/",
+        TaskDetailView.as_view(),
+        name="task-detail"
+    ),
+    path(
+        "tasks/<int:pk>/toggle-assign/",
+        toggle_assign_to_task,
+        name="toggle-task-assign"
+    ),
+    # Employee
+    path(
+        "employees/",
+        EmployeeListView.as_view(),
+        name="employee-list"
+    ),
+    path(
+        "employees/<int:pk>/",
+        EmployeeDetailView.as_view(),
+        name="employee-detail"
+    ),
+    path(
+        "employees/create/",
+        EmployeeCreateView.as_view(),
+        name="employee-create"
+    ),
+    path(
+        "employees/<int:pk>/update/",
+        EmployeeUpdatePositionView.as_view(),
+        name="employee-update"
+    ),
+    path(
+        "employee/<int:pk>/delete/",
+        EmployeeDeleteView.as_view(),
+        name="employee-delete"
     )
 ]
 

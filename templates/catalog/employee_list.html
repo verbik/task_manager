@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <h1>
+      Employee List
+      <a href="{% url 'catalog:employee-create' %}" class="btn btn-primary link-to-page">
+        Create
+      </a>
+    </h1>
+    {% include "includes/search_form.html" %}
+    {% if employee_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Position</th>
+      </tr>
+    {% for employee in employee_list %}
+      <tr>
+        <td>{{ employee.id }}</td>
+        <td>
+          <a href="{% url 'catalog:employee-detail' pk=employee.id %}">
+            {{ employee.username }}
+            {% if user == employee %} (Me){% endif %}
+          </a>
+        </td>
+        <td>{{ employee.first_name }}</td>
+        <td>{{ employee.last_name }}</td>
+        <td>
+          {% if employee.position %}
+            {{ employee.position }}
+          {% else %}
+            <a href="{% url 'catalog:employee-update' pk=employee.id %}">Add position</a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+
+    </table>
+    {% else %}
+      <p>There are no employees in the service.</p>
+    {% endif %}
+{% endblock %}

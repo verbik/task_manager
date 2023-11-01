@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Username: {{ employee.username }}
+    <a href="{% url 'catalog:employee-delete' pk=employee.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'catalog:employee-update' pk=employee.id %}" class="btn btn-secondary link-to-page">
+      Update position
+    </a>
+  </h1>
+
+  <p><strong>First name:</strong> {{ employee.first_name }}</p>
+  <p><strong>Last name:</strong> {{ employee.last_name }}</p>
+  <p><strong>Position:</strong> {{ employee.position }}</p>
+  <p><strong>Is staff:</strong> {{ employee.is_staff }}</p>
+
+  <div class="ml-3">
+    <h4>Tasks</h4>
+
+    {% for task in employee.tasks.all %}
+        <hr>
+        <p><strong>Name:</strong> {{ task.name }}</p>
+        <p><strong>Type:</strong> {{ task.task_type}}</p>
+        <p class="text-muted"><strong>Id:</strong> {{task.id}}</p>
+
+    {% empty %}
+      <p>No tasks!</p>
+    {% endfor %}
+  </div>
+{% endblock %}

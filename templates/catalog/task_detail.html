@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ task.name }}
+    <a href="{% url 'catalog:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'catalog:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <h1>
+    Assignees:
+    {% if task in user.tasks.all %}
+      <a href="{% url 'catalog:toggle-task-assign' pk=task.id %}" class="btn btn-danger link-to-page">
+        Delete me from this task
+      </a>
+    {% else %}
+      <a href="{% url 'catalog:toggle-task-assign' pk=task.id %}" class="btn btn-success link-to-page">
+        Assign me for this task
+      </a>
+    {% endif %}
+
+  </h1>
+  <hr>
+  <ul>
+    {% for employee in task.assignees.all %}
+      <li>{{ employee.username }} ({{ employee.first_name }} {{ employee.last_name }}, {{ employee.position }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
