@@ -45,12 +45,15 @@ class Task(models.Model):
     ]
 
     name = models.CharField(max_length=255)
-    description = models.TextField()
-    deadline = models.DateTimeField()
+    description = models.TextField(null=True,
+                                   blank=True)
+    deadline = models.DateTimeField(null=True,
+                                    blank=True)
     is_completer = models.BooleanField(default=False)
     priority = models.CharField(
         max_length=50,
-        choices=PRIORITY_CHOICES
+        choices=PRIORITY_CHOICES,
+        null=True,
     )
     task_type = models.ForeignKey(TaskType,
                                   related_name="tasks",
