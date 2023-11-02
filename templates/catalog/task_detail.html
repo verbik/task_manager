@@ -11,7 +11,8 @@
       Update
     </a>
   </h1>
-  <h1>
+  <br>
+  <h2>
     Assignees:
     {% if task in user.tasks.all %}
       <a href="{% url 'catalog:toggle-task-assign' pk=task.id %}" class="btn btn-danger link-to-page">
@@ -23,7 +24,7 @@
       </a>
     {% endif %}
 
-  </h1>
+  </h2>
   <hr>
   <ul>
     {% for employee in task.assignees.all %}

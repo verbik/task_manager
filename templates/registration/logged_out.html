@@ -1,7 +1,15 @@
-{% extends "base.html" %}
+{% extends "base-presentation.html" %}
+
+{% block title %}Logged Out{% endblock %}
 
 {% block content %}
-<p>Logged out!</p>
-
-<a href="{% url 'login'%}">Click here to login again.</a>
+<div id="app-layout-body" class="container-fluid body-content">
+  <div id="div-logged-out" class="d-flex justify-content-center" style="height: 100vh;">
+    <div class="text-center" style="background-color: #F9CECD; padding: 50px; border-radius: 10px; text-align: center; margin: 50px">
+      <h1>You are now logged out</h1>
+      <a href="{% url 'login' %}" class="btn-primary">🧚🏻‍♀️Click here to log in🧚🏻</a>
+    </div>
+  </div>s
+</div>
 {% endblock %}
+
