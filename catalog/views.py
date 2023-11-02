@@ -93,7 +93,8 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         task_type = self.request.GET.get("task_type", "")
-        unique_task_types = TaskType.objects.values_list("name", flat=True).distinct()
+        unique_task_types = TaskType.objects.values_list("name",
+                                                         flat=True).distinct()
         context["unique_task_types"] = unique_task_types
 
         context["search_form"] = TaskSearchForm(
