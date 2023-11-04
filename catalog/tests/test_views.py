@@ -135,7 +135,7 @@ class ToggleAssignToTaskViewTest(TestCase):
         )
 
     def test_toggle_assign_to_task(self):
-        url = reverse("catalog:toggle-task-assign", args=[self.task.id])
+        url = reverse("catalog:task-assignees-update", args=[self.task.id])
         self.client.get(url)
         self.assertIn(self.user, self.task.assignees.all())
 

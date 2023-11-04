@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect, HttpRequest, HttpResponseBadRequest
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from catalog.models import (Task,
@@ -141,16 +141,21 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
 
 
-@login_required
-def toggle_assign_to_task(request, pk):
-    employee = get_user_model().objects.get(id=request.user.id)
-    if (
-        Task.objects.get(id=pk) in employee.tasks.all()
-    ):  # probably could check if car exists
-        employee.tasks.remove(pk)
-    else:
-        employee.tasks.add(pk)
-    return HttpResponseRedirect(reverse_lazy("catalog:task-detail", args=[pk]))
+class TaskAssigneesUpdateView(LoginRequiredMixin, generic.View):
+    model = Task
+    fields = ("assignees",)
+
+    @staticmethod
+    def post(request, *args, **kwargs) -> redirect:
+        employee = request.user
+        task = get_object_or_404(Task, pk=kwargs["pk"])
+        queryset = task.assignees.all()
+        if employee in queryset:
+            task.assignees.remove(employee)
+        else:
+            task.assignees.add(employee)
+
+        return redirect("catalog:task-detail", pk=kwargs["pk"])
 
 
 # Employee Views

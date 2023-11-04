@@ -11,7 +11,7 @@ from .views import (
     TaskUpdateView,
     TaskDeleteView,
     TaskDetailView,
-    toggle_assign_to_task,
+    TaskAssigneesUpdateView,
     EmployeeListView,
     EmployeeDetailView,
     EmployeeCreateView,
@@ -72,9 +72,9 @@ urlpatterns = [
         name="task-detail"
     ),
     path(
-        "tasks/<int:pk>/toggle-assign/",
-        toggle_assign_to_task,
-        name="toggle-task-assign"
+        "tasks/<int:pk>/toggle-assignees-update/",
+        TaskAssigneesUpdateView.as_view(),
+        name="task-assignees-update"
     ),
     # Employee
     path(
