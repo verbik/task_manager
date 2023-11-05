@@ -25,11 +25,6 @@ class TaskSearchForm(forms.Form):
             attrs={"placeholder": "Search task by name"}
         )
     )
-    # task_type = forms.ChoiceField(
-    #     label="Task Type",
-    #     required=False,
-    #     choices=TaskType.objects.values_list()
-    # )
 
 
 class EmployeeSearchForm(forms.Form):
