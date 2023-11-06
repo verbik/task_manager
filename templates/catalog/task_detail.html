@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ task.name }}
+    <form action="{% url "catalog:task-assignees-update" pk=task.id %}" method="post">
+      {% csrf_token %}
+      {% if request.user in task.assignees.all %}
+        <input
+            type="submit"
+            class="btn btn-danger link-to-page"
+            value="Delete me from this task" />
+      {% else %}
+        <input
+            type="submit"
+            class="btn btn-success link-to-page"
+            value="Assign me to this task" />
+      {% endif %}
+    </form>
+  </h1>
+  <br>
+  <h2>
+    Assignees:
+  </h2>
+  <hr>
+  <ul>
+    {% for employee in task.assignees.all %}
+      <li>{{ employee.username }} ({{ employee.first_name }} {{ employee.last_name }}, {{ employee.position }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

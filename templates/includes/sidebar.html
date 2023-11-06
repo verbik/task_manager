@@ -1,0 +1,16 @@
+<ul class="sidebar-nav list-group">
+  {% if user.is_authenticated %}
+    <li class="list-group-item">Current user: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
+    <li class="list-group-item"><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+  {% else %}
+    <li class="list-group-item"><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+  {% endif %}
+
+  <br>
+
+  <li class="list-group-item"><a href="{% url 'catalog:index' %}">Home</a></li>
+  <li class="list-group-item"><a href="{% url 'catalog:task-list' %}">Tasks📄</a></li>
+  <li class="list-group-item"><a href="{% url 'catalog:task-type-list' %}">Task types🗄</a></li>
+  <li class="list-group-item"><a href="{% url 'catalog:employee-list' %}">Employees👨‍💼👩‍💼</a></li>
+  <li class="list-group-item"><a href="{% url 'catalog:position-list' %}">Positions✍️</a></li>
+</ul>
